@@ -1,5 +1,9 @@
 # Monzo Webhook Schema
 
+![Tests](https://github.com/trickeydan/monzo-webhook-schema/workflows/Tests/badge.svg)
+![LGPL Licence](https://img.shields.io/badge/license-LGPL3-green.svg)
+![Bees](https://img.shields.io/badge/bees-110%25-yellow.svg)
+
 This is a work in progress project to document the complete schema for the [Monzo Webhook API](https://docs.monzo.com/#webhooks).
 
 It is implemented in Python using the [Pydantic](https://pydantic-docs.helpmanual.io/) data validation library.
