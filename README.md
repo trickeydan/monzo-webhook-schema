@@ -11,3 +11,22 @@ The schema is based on my observations of data from the API. In order to make it
 ## Usage
 
 The `MonzoWebhookSchema` class can be used to validate and access data programatically. A JSON Schema can also be generated from this file.
+
+You can use this to easily create applications that use real-time data from Monzo!
+
+```python
+from flask import Flask, request
+from monzo_webhook import MonzoWebhookSchema
+
+app = Flask(__name__)
+
+@app.route("/mywebhook")
+def webhook():
+    data = MonzoWebhookSchema(**request.get_json())
+
+    if data.amount < 0:
+        print(f"Received £{data.amount/100}")
+    else:
+        print(f"Spent £{data.amount/100} on {data.category}")
+    return "", 200
+```
