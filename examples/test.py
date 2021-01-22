@@ -1,5 +1,5 @@
-from pathlib import Path
 from json import loads
+from pathlib import Path
 
 from monzo_webhook import MonzoWebhookSchema
 

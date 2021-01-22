@@ -2,7 +2,7 @@
 
 CMD:=poetry run
 PYMODULE:=monzo_webhook
-EXTRACODE:=
+EXTRACODE:=examples
 
 all: type lint
 
