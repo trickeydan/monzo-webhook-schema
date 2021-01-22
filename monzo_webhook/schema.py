@@ -1,85 +1,12 @@
 """Monzo Webhook Schema."""
 from datetime import datetime
-from enum import Enum
-from typing import Any, Dict, NewType, Optional, Union
+from typing import Any, Dict, Optional
 
 from .model import Model
-
-TabID = NewType("TabID", str)
-Category = NewType("Category", str)
-AccountID = NewType("AccountID", str)
-DeDupeID = NewType("DeDupeID", str)
-UserID = NewType("UserID", str)
-TransactionID = NewType("TransactionID", str)
-P2PTransferID = NewType("P2PTransferID", str)
-
-FPID = NewType("FPID", str)
-EntrySetID = NewType("EntrySetID", str)
-
-
-class Currency(Enum):
-
-    GBP = "GBP"
-
-
-class P2PInitiator(Enum):
-
-    TAB = "tab"
-
-
-class BeneficiaryAccountType(Enum):
-
-    PERSONAL = "Personal"
-
-
-class TransactionScheme(Enum):
-
-    P2P = "p2p_payment"
-    FASTER_PAYMENTS = "payport_faster_payments"
-
-
-class P2PTransactionCounterparty(Model):
-
-    account_id: AccountID
-    name: str
-    preferred_name: str
-    user_id: UserID
-
-
-class P2PTransactionMetadata(Model):
-
-    p2p_initiator: P2PInitiator
-    p2p_transfer_id: P2PTransferID
-    tab_id: TabID
-
-
-class FasterPaymentsCounterParty(Model):
-
-    account_number: str
-    sort_code: str
-    name: str
-    beneficiary_account_type: Optional[BeneficiaryAccountType]
-    user_id: UserID
-
-
-class FPInitiator(Enum):
-
-    CUSTOMER = "customer"
-
-
-class FPTransactionMetadata(Model):
-
-    action_code: Optional[str]
-    confirmation_of_payee_decision_id: Optional[str]
-    confirmation_of_payee_requester_id: Optional[UserID]
-    faster_payment: bool
-    faster_payment_initiator: Optional[FPInitiator]
-    fps_fpid: FPID
-    fps_payment_id: FPID
-    insertion: EntrySetID
-    notes: str
-    outbound_payment_trace_id: Optional[str]
-    trn: str
+from .transaction_schemes import (Counterparty, TransactionMetadata,
+                                  TransactionScheme)
+from .types import (AccountID, Category, Currency, DeDupeID, TransactionID,
+                    UserID)
 
 
 class TransactionCreatedData(Model):
@@ -99,10 +26,10 @@ class TransactionCreatedData(Model):
     updated: datetime
     account_id: AccountID
     user_id: UserID
-    counterparty: Union[P2PTransactionCounterparty, FasterPaymentsCounterParty]
+    counterparty: Counterparty
     scheme: TransactionScheme
     dedupe_id: DeDupeID
-    metadata: Union[P2PTransactionMetadata, FPTransactionMetadata]
+    metadata: TransactionMetadata
 
     originator: bool
     include_in_spending: bool
