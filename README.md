@@ -1,6 +1,6 @@
 # Monzo Webhook Schema
 
-This is a work in progress project to document the complete schema for the Monzo Webhook API.
+This is a work in progress project to document the complete schema for the [Monzo Webhook API](https://docs.monzo.com/#webhooks).
 
 It is implemented in Python using the [Pydantic](https://pydantic-docs.helpmanual.io/) data validation library.
 
