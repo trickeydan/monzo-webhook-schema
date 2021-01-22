@@ -1,9 +1,9 @@
 from pathlib import Path
 from json import loads
 
-from monzo_schema import MonzoSchema
+from monzo_webhook import MonzoWebhookSchema
 
 for i in Path("reqs").iterdir():
-    print("Attempting to load data from {i}")
+    print(f"Attempting to load data from {i}")
     with i.open("r") as fh:
-        MonzoSchema(**loads(fh.read()))
+        MonzoWebhookSchema(**loads(fh.read()))

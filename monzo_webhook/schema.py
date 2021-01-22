@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Dict, NewType, Optional, Union
 
-from pydantic import BaseModel
+from .model import Model
 
 TabID = NewType("TabID", str)
 Category = NewType("Category", str)
@@ -38,10 +38,7 @@ class TransactionScheme(Enum):
     FASTER_PAYMENTS = "payport_faster_payments"
 
 
-class P2PTransactionCounterparty(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class P2PTransactionCounterparty(Model):
 
     account_id: AccountID
     name: str
@@ -49,20 +46,14 @@ class P2PTransactionCounterparty(BaseModel):
     user_id: UserID
 
 
-class P2PTransactionMetadata(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class P2PTransactionMetadata(Model):
 
     p2p_initiator: P2PInitiator
     p2p_transfer_id: P2PTransferID
     tab_id: TabID
 
 
-class FasterPaymentsCounterParty(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class FasterPaymentsCounterParty(Model):
 
     account_number: str
     sort_code: str
@@ -76,10 +67,7 @@ class FPInitiator(Enum):
     CUSTOMER = "customer"
 
 
-class FPTransactionMetadata(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class FPTransactionMetadata(Model):
 
     action_code: Optional[str]
     confirmation_of_payee_decision_id: Optional[str]
@@ -94,10 +82,7 @@ class FPTransactionMetadata(BaseModel):
     trn: str
 
 
-class TransactionCreatedData(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class TransactionCreatedData(Model):
 
     id: TransactionID
     created: datetime
@@ -135,10 +120,7 @@ class TransactionCreatedData(BaseModel):
     atm_fees_detailed: Any
 
 
-class MonzoSchema(BaseModel):
-
-    class Config:
-        extra = "forbid"
+class MonzoWebhookSchema(Model):
 
     type: str
     data: TransactionCreatedData
