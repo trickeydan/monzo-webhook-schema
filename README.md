@@ -19,18 +19,16 @@ The `MonzoWebhookSchema` class can be used to validate and access data programat
 You can use this to easily create applications that use real-time data from Monzo!
 
 ```python
-from flask import Flask, request
+from fastapi import FastAPI
 from monzo_webhook import MonzoWebhookSchema
 
-app = Flask(__name__)
+app = FastAPI
 
 @app.route("/mywebhook")
-def webhook():
-    data = MonzoWebhookSchema(**request.get_json())
-
+async def webhook(data: MonzoWebhookSchema) -> str:
     if data.amount < 0:
         print(f"Received £{data.amount/100}")
     else:
         print(f"Spent £{data.amount/100} on {data.category}")
-    return "", 200
+    return "Success"
 ```
