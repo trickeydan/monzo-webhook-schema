@@ -4,6 +4,7 @@ from typing import Any, Dict, Optional, Union
 
 from pydantic import constr
 
+from .merchant import Merchant
 from .model import Model
 from .transaction_schemes import (Counterparty, TransactionMetadata,
                                   TransactionScheme)
@@ -42,7 +43,7 @@ class TransactionCreatedData(Model):
     amount_is_pending: bool
 
     fees: Any
-    merchant: Any
+    merchant: Optional[Merchant]
     labels: Any
     attachments: Any
     international: Any
