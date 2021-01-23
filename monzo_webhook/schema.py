@@ -1,6 +1,8 @@
 """Monzo Webhook Schema."""
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
+
+from pydantic import constr
 
 from .model import Model
 from .transaction_schemes import (Counterparty, TransactionMetadata,
@@ -20,7 +22,7 @@ class TransactionCreatedData(Model):
     category: Category
     categories: Optional[Dict[Category, int]]
     is_load: bool
-    settled: datetime
+    settled: Union[datetime, constr(min_length=0, max_length=0)]
     local_amount: int
     local_currency: Currency
     updated: datetime
