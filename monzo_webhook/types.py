@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import NewType
 
+from pydantic import ConstrainedStr
+
 __all__ = [
     "Category",
     "AccountID",
@@ -28,3 +30,9 @@ class Currency(Enum):
 class BeneficiaryAccountType(Enum):
 
     PERSONAL = "Personal"
+
+
+class EmptyStr(ConstrainedStr):
+
+    max_length = 0
+    min_length = 0

@@ -1,17 +1,29 @@
 from datetime import datetime
 from typing import NewType
 
-from pydantic import constr, confloat, HttpUrl
-
-MerchantID = NewType("MerchantID", str)
-MerchantGroupID = NewType("MerchantGroupID", str)
+from pydantic import ConstrainedFloat, ConstrainedStr, HttpUrl
 
 from .model import Model
 from .types import Category, TransactionID
 
+MerchantID = NewType("MerchantID", str)
+MerchantGroupID = NewType("MerchantGroupID", str)
+
+
+class Latitude(ConstrainedFloat):
+
+    ge = -90
+    le = 90
+
+
+class Longitude(ConstrainedFloat):
+
+    ge = -180
+    le = 180
+
 
 class MerchantAddress(Model):
-    
+
     short_formatted: str
     formatted: str
     address: str
@@ -19,14 +31,14 @@ class MerchantAddress(Model):
     region: str
     country: str
     postcode: str
-    latitude: confloat(ge=-90, le=90)
-    longitude: confloat(ge=-180, le=180)
+    latitude: Latitude
+    longitude: Longitude
     zoom_level: int
     approximate: bool
 
 
 class MerchantMetadata(Model):
-    
+
     created_for_merchant: MerchantID
     created_for_transaction: TransactionID
     enriched_from_settlement: TransactionID
@@ -40,14 +52,20 @@ class MerchantMetadata(Model):
     website: str
 
 
+class Emoji(ConstrainedStr):
+
+    max_length = 1
+    min_length = 1
+
+
 class Merchant(Model):
-    
+
     id: MerchantID
     group_id: MerchantGroupID
     created: datetime
     name: str
     logo: HttpUrl
-    emoji: constr(max_length=1, min_length=1)
+    emoji: Emoji
     category: Category
     online: bool
     atm: bool

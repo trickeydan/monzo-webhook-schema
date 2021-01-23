@@ -2,14 +2,12 @@
 from datetime import datetime
 from typing import Any, Dict, Optional, Union
 
-from pydantic import constr
-
 from .merchant import Merchant
 from .model import Model
 from .transaction_schemes import (Counterparty, TransactionMetadata,
                                   TransactionScheme)
-from .types import (AccountID, Category, Currency, DeDupeID, TransactionID,
-                    UserID)
+from .types import (AccountID, Category, Currency, DeDupeID, EmptyStr,
+                    TransactionID, UserID)
 
 
 class TransactionCreatedData(Model):
@@ -23,7 +21,7 @@ class TransactionCreatedData(Model):
     category: Category
     categories: Optional[Dict[Category, int]]
     is_load: bool
-    settled: Union[datetime, constr(min_length=0, max_length=0)]
+    settled: Union[datetime, EmptyStr]
     local_amount: int
     local_currency: Currency
     updated: datetime
